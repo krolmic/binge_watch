@@ -1,7 +1,7 @@
 on: [push, pull_request]
-name: Flutter Analyze & Test
+name: flutter test
 jobs:
-  analyze:
+  test:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
