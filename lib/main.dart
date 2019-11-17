@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -15,8 +13,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: <String, Widget Function(BuildContext)>{
         '/': (BuildContext context) => const MyHomePage(title: 'MyApp'),
-        '/choice': (BuildContext context) => ChoicePage(),
-        '/results': (BuildContext context) => ResultsPage(),
       },
     );
   }
@@ -64,104 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class ChoicePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Logo'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Tap on your streaming platforms',
-            ),
-            RaisedButton(
-              child: const Text('Next'),
-              onPressed: () {
-                log('Next');
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ResultsPage extends StatefulWidget {
-  @override
-  _ResultsPageState createState() => _ResultsPageState();
-}
-
-class _ResultsPageState extends State<ResultsPage> {
-  PageController controller;
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = PageController(
-      initialPage: _currentPage,
-      keepPage: false,
-      viewportFraction: 0.5,
-    );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: PageView.builder(
-            onPageChanged: (int value) {
-              setState(() {
-                _currentPage = value;
-              });
-            },
-            controller: controller,
-            itemBuilder: (BuildContext context, int index) =>
-                _carousellBuilder(index),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _carousellBuilder(int index) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (BuildContext context, Widget child) {
-        double value = 1.0;
-        if (controller.position.haveDimensions) {
-          value = controller.page - index;
-          value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
-        }
-
-        return Center(
-          child: SizedBox(
-            height: Curves.easeOut.transform(value) * 300,
-            width: Curves.easeOut.transform(value) * 250,
-            child: child,
-          ),
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.all(8.0),
-        color: index % 2 == 0 ? Colors.blue : Colors.red,
       ),
     );
   }
