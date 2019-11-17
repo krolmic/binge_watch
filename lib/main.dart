@@ -12,7 +12,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/results',
+      routes: {
+        '/': (context) => const MyHomePage(title: 'MyApp'),
+        '/choice': (context) => ChoicePage(),
+        '/results': (context) => ResultsPage(),
+      },
     );
   }
 }
@@ -86,6 +91,76 @@ class ChoicePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ResultsPage extends StatefulWidget {
+  @override
+  _ResultsPageState createState() => _ResultsPageState();
+}
+
+class _ResultsPageState extends State<ResultsPage> {
+  PageController controller;
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PageController(
+      initialPage: _currentPage,
+      keepPage: false,
+      viewportFraction: 0.5,
+    );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: PageView.builder(
+            onPageChanged: (value) {
+              setState(() {
+                _currentPage = value;
+              });
+            },
+            controller: controller,
+            itemBuilder: (context, index) => _carousellBuilder(index),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _carousellBuilder(int index) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        double value = 1.0;
+        if (controller.position.haveDimensions) {
+          value = controller.page - index;
+          value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
+        }
+
+        return Center(
+          child: SizedBox(
+            height: Curves.easeOut.transform(value) * 300,
+            width: Curves.easeOut.transform(value) * 250,
+            child: child,
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        color: index % 2 == 0 ? Colors.blue : Colors.red,
       ),
     );
   }
