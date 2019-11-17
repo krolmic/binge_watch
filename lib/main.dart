@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/results',
-      routes: {
-        '/': (context) => const MyHomePage(title: 'MyApp'),
-        '/choice': (context) => ChoicePage(),
-        '/results': (context) => ResultsPage(),
+      routes: <String, Widget Function(BuildContext)>{
+        '/': (BuildContext context) => const MyHomePage(title: 'MyApp'),
+        '/choice': (BuildContext context) => ChoicePage(),
+        '/results': (BuildContext context) => ResultsPage(),
       },
     );
   }
@@ -127,13 +127,14 @@ class _ResultsPageState extends State<ResultsPage> {
       body: Center(
         child: Container(
           child: PageView.builder(
-            onPageChanged: (value) {
+            onPageChanged: (int value) {
               setState(() {
                 _currentPage = value;
               });
             },
             controller: controller,
-            itemBuilder: (context, index) => _carousellBuilder(index),
+            itemBuilder: (BuildContext context, int index) =>
+                _carousellBuilder(index),
           ),
         ),
       ),
@@ -143,7 +144,7 @@ class _ResultsPageState extends State<ResultsPage> {
   Widget _carousellBuilder(int index) {
     return AnimatedBuilder(
       animation: controller,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget child) {
         double value = 1.0;
         if (controller.position.haveDimensions) {
           value = controller.page - index;
