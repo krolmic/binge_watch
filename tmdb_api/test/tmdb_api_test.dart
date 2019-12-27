@@ -1,8 +1,8 @@
+import 'dart:convert';
 import 'package:tmdb_api/tmdb_api.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:test/test.dart';
-import 'dart:convert';
 
 void main() {
   group('Tests by using mock data', () {
@@ -38,7 +38,7 @@ void main() {
             'backdrop_path': '/xJWPZIYOEFIjZpBL7SVBGnzRYXp.jpg',
             'original_language': 'en',
             'original_title': 'Frozen II',
-            'genre_ids': [12, 16, 35, 10402, 10751],
+            'genre_ids': <int>[12, 16, 35, 10402, 10751],
             'title': 'Frozen II',
             'vote_average': 7.1,
             'overview':
@@ -55,7 +55,7 @@ void main() {
             'backdrop_path': '/a1MlbLBk5Sy6YvMbSuKfwGlDVlb.jpg',
             'original_language': 'en',
             'original_title': 'Cars',
-            'genre_ids': [12, 16, 35, 10751],
+            'genre_ids': <int>[12, 16, 35, 10751],
             'title': 'Cars',
             'vote_average': 6.7,
             'overview':
@@ -67,16 +67,16 @@ void main() {
 
       // Get the response containing mock data
       final MockClient client = _getMockClient(json.encode(bodyMap), 200);
-      final apiProvider = TMDBApi(client, 'foo');
-      final response =
-          await apiProvider.getDiscoverMoviesResults(genres: [movieIdAction]);
+      final TMDBApi apiProvider = TMDBApi(client, 'foo');
+      final Map<String, dynamic> response = await apiProvider
+          .getDiscoverMoviesResults(genres: <int>[movieIdAction]);
 
       // Verify the response
       expect(response['results'], isList);
       expect(response['results'].length, equals(2));
 
       // Verify the URL
-      final expectedUrl =
+      final String expectedUrl =
           'https://api.themoviedb.org/3/discover/movie?api_key=foo&with_genres=${movieIdAction.toString()}';
       expect(doneRequests.single.url.toString(), expectedUrl);
     });
@@ -95,7 +95,7 @@ void main() {
     test('getDiscoverMoviesResults invalid status code test', () async {
       // Verify the method throws an exception
       final MockClient client = _getMockClient('{"foo": "bar"}', 500);
-      final apiProvider = TMDBApi(client, 'foo');
+      final TMDBApi apiProvider = TMDBApi(client, 'foo');
       expect(
           () => apiProvider.getDiscoverMoviesResults(),
           throwsA(predicate<Exception>((Exception e) =>
@@ -136,12 +136,12 @@ void main() {
             'vote_average': 7.8,
             'first_air_date': '2003-09-03',
             'poster_path': '/cazh5xGS5I5KVVVRSd2xt3lZXVo.jpg',
-            'genre_ids': [99, 18],
+            'genre_ids': <int>[99, 18],
             'original_language': 'en',
             'backdrop_path': '/nE4fKbVq1JY5dyauuAZSYcbh2hy.jpg',
             'overview':
                 'Revealing the dark truth that aviation safety improves one crash at a time, Mayday  investigates legendary aviation disasters to find out what went wrong and why.\n\nBased on cockpit voice recorders, accident reports and eyewitness accounts, every episode also features interviews, state-of-the-art CGI and gripping reenactments.',
-            'origin_country': ['CA']
+            'origin_country': <String>['CA']
           },
           <String, dynamic>{
             'original_name': 'Top Gear',
@@ -152,12 +152,12 @@ void main() {
             'vote_average': 7.4,
             'first_air_date': '2002-10-20',
             'poster_path': '/sYx1OktL5q8kvRCuZ8Pccg8xLBy.jpg',
-            'genre_ids': [99],
+            'genre_ids': <int>[99],
             'original_language': 'en',
             'backdrop_path': '/ag2oZaayXrPL7XFEre5x4rBrxue.jpg',
             'overview':
                 'The hosts talk about the latest cars and its specifications. They review the performance of the car and also find out if it is as good as the manufacturers claim. The current hosts are Chris Evans and Matt LeBlanc with The Stig.',
-            'origin_country': ['GB']
+            'origin_country': <String>['GB']
           }
         ]
       };
@@ -166,14 +166,14 @@ void main() {
       final MockClient client = _getMockClient(json.encode(bodyMap), 200);
       final TMDBApi apiProvider = TMDBApi(client, 'foo');
       final Map<String, dynamic> response = await apiProvider
-          .getDiscoverTVShowsResults(genres: [tvShowIdDocumentary]);
+          .getDiscoverTVShowsResults(genres: <int>[tvShowIdDocumentary]);
 
       // Verify the response
       expect(response['results'], isList);
       expect(response['results'].length, equals(2));
 
       // Verify the URL
-      final expectedUrl =
+      final String expectedUrl =
           'https://api.themoviedb.org/3/discover/tv?api_key=foo&with_genres=${tvShowIdDocumentary.toString()}';
       expect(doneRequests.single.url.toString(), expectedUrl);
     });
@@ -184,8 +184,8 @@ void main() {
         'backdrop_path': '/mMZRKb3NVo5ZeSPEIaNW9buLWQ0.jpg',
         'belongs_to_collection': null,
         'budget': 63000000,
-        'genres': [
-          {'id': 18, 'name': 'Drama'}
+        'genres': <Map<String, dynamic>>[
+          <String, dynamic>{'id': 18, 'name': 'Drama'}
         ],
         'homepage': 'http://www.foxmovies.com/movies/fight-club',
         'id': 550,
@@ -250,8 +250,8 @@ void main() {
         'release_date': '1999-10-15',
         'revenue': 100853753,
         'runtime': 139,
-        'spoken_languages': [
-          {'iso_639_1': 'en', 'name': 'English'}
+        'spoken_languages': <Map<String, String>>[
+          <String, String>{'iso_639_1': 'en', 'name': 'English'}
         ],
         'status': 'Released',
         'tagline': 'Mischief. Mayhem. Soap.',
@@ -282,7 +282,7 @@ void main() {
       final Map<String, dynamic> bodyMap = <String, dynamic>{
         'backdrop_path': null,
         'created_by': <String>[],
-        'episode_run_time': [30],
+        'episode_run_time': <int>[30],
         'first_air_date': '1985-12-30',
         'genres': <Map<String, dynamic>>[
           <String, dynamic>{'id': 35, 'name': 'Comedy'}

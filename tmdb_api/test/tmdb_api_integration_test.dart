@@ -10,7 +10,7 @@ void main() {
 
     setUp(() {
       client = Client();
-      api = TMDBApi(client, "8e68bef61fb954fbb58e148283d81f85");
+      api = TMDBApi(client, '8e68bef61fb954fbb58e148283d81f85');
     });
 
     test('getDiscoverMoviesResults test', () async {
@@ -23,7 +23,7 @@ void main() {
 
     test('getDiscoverMoviesResults genres test', () async {
       final Map<String, dynamic> result = await api.getDiscoverMoviesResults(
-          genres: [movieIdComedy, movieIdAnimation]);
+          genres: <int>[movieIdComedy, movieIdAnimation]);
       expect(result, isMap);
       expect(result['results'], isList);
       expect(result['results'], isNotEmpty);
@@ -31,8 +31,7 @@ void main() {
 
     test('getDiscoverMoviesResults genres page test', () async {
       final Map<String, dynamic> result = await api.getDiscoverMoviesResults(
-          genres: [movieIdComedy, movieIdAnimation],
-          page: 2);
+          genres: <int>[movieIdComedy, movieIdAnimation], page: 2);
       expect(result, isMap);
       expect(result['results'], isList);
       expect(result['results'], isNotEmpty);
@@ -47,7 +46,7 @@ void main() {
 
     test('getDiscoverTVShowsResults genres test', () async {
       final Map<String, dynamic> result = await api.getDiscoverTVShowsResults(
-          genres: [tvShowIdComedy, tvShowIdAnimation]);
+          genres: <int>[tvShowIdComedy, tvShowIdAnimation]);
       expect(result, isMap);
       expect(result['results'], isList);
       expect(result['results'], isNotEmpty);
@@ -55,8 +54,7 @@ void main() {
 
     test('getDiscoverTVShowsResults genres page test', () async {
       final Map<String, dynamic> result = await api.getDiscoverTVShowsResults(
-          genres: [tvShowIdComedy, tvShowIdAnimation],
-          page: 2);
+          genres: <int>[tvShowIdComedy, tvShowIdAnimation], page: 2);
       expect(result, isMap);
       expect(result['results'], isList);
       expect(result['results'], isNotEmpty);
@@ -103,20 +101,11 @@ void main() {
 
       final List<Map<String, dynamic>> expectedResult = <Map<String, dynamic>>[
         <String, dynamic>{'id': movieIdAction, 'name': 'Action'},
-        <String, dynamic>{
-          'id': movieIdAdventure,
-          'name': 'Adventure'
-        },
-        <String, dynamic>{
-          'id': movieIdAnimation,
-          'name': 'Animation'
-        },
+        <String, dynamic>{'id': movieIdAdventure, 'name': 'Adventure'},
+        <String, dynamic>{'id': movieIdAnimation, 'name': 'Animation'},
         <String, dynamic>{'id': movieIdComedy, 'name': 'Comedy'},
         <String, dynamic>{'id': movieIdCrime, 'name': 'Crime'},
-        <String, dynamic>{
-          'id': movieIdDocumentary,
-          'name': 'Documentary'
-        },
+        <String, dynamic>{'id': movieIdDocumentary, 'name': 'Documentary'},
         <String, dynamic>{'id': movieIdDrama, 'name': 'Drama'},
         <String, dynamic>{'id': movieIdFamily, 'name': 'Family'},
         <String, dynamic>{'id': movieIdFantasy, 'name': 'Fantasy'},
@@ -139,26 +128,21 @@ void main() {
     });
 
     test('getListTVShowsGenreIDsResults test', () async {
-      Map<String, dynamic> result = await api.getListTVShowsGenreIDsResults();
+      final Map<String, dynamic> result =
+          await api.getListTVShowsGenreIDsResults();
       expect(result, isMap);
       expect(result['genres'], isList);
       expect(result['genres'], isNotEmpty);
 
-      List<Map<String, dynamic>> expectedResult = <Map<String, dynamic>>[
+      final List<Map<String, dynamic>> expectedResult = <Map<String, dynamic>>[
         <String, dynamic>{
           'id': tvShowIdActionAdventure,
           'name': 'Action & Adventure'
         },
-        <String, dynamic>{
-          'id': tvShowIdAnimation,
-          'name': 'Animation'
-        },
+        <String, dynamic>{'id': tvShowIdAnimation, 'name': 'Animation'},
         <String, dynamic>{'id': tvShowIdComedy, 'name': 'Comedy'},
         <String, dynamic>{'id': tvShowIdCrime, 'name': 'Crime'},
-        <String, dynamic>{
-          'id': tvShowIdDocumentary,
-          'name': 'Documentary'
-        },
+        <String, dynamic>{'id': tvShowIdDocumentary, 'name': 'Documentary'},
         <String, dynamic>{'id': tvShowIdDrama, 'name': 'Drama'},
         <String, dynamic>{'id': tvShowIdFamily, 'name': 'Family'},
         <String, dynamic>{'id': tvShowIdKids, 'name': 'Kids'},
@@ -171,10 +155,7 @@ void main() {
         },
         <String, dynamic>{'id': tvShowIdSoap, 'name': 'Soap'},
         <String, dynamic>{'id': tvShowIdTalk, 'name': 'Talk'},
-        <String, dynamic>{
-          'id': tvShowIdWarPolitics,
-          'name': 'War & Politics'
-        },
+        <String, dynamic>{'id': tvShowIdWarPolitics, 'name': 'War & Politics'},
         <String, dynamic>{'id': tvShowIdWestern, 'name': 'Western'}
       ];
 

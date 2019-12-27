@@ -18,12 +18,12 @@ class TMDBApi {
   /// [resultsListKey] to cast it's value to a list.
   Future<Map<String, dynamic>> _getResults(String endpointPath,
       [String resultsListKey = '',
-      Map<String, String> queryParameters = const {}]) async {
+      Map<String, String> queryParameters = const <String, String>{}]) async {
     // Prepare Uri and send a GET request
     final Uri discoverUri = Uri.https(
       baseUrl,
       endpointPath,
-      {'api_key': apiKey, ...queryParameters},
+      <String, String>{'api_key': apiKey, ...queryParameters},
     );
     final Response response = await client.get(discoverUri);
 
@@ -48,7 +48,7 @@ class TMDBApi {
             List<Map<String, dynamic>>.from(movieSearchJson[resultsListKey]);
       } on TypeError {
         throw TMDBApiResponseException(
-            'Failed to create a list from value of ${resultsListKey}.');
+            'Failed to create a list from value of $resultsListKey.');
       }
     }
 
@@ -58,7 +58,7 @@ class TMDBApi {
   /// Returns movies results based on a list of genres.
   Future<Map<String, dynamic>> getDiscoverMoviesResults(
       {List<int> genres, int page}) async {
-    final Map<String, String> queryParameters = {};
+    final Map<String, String> queryParameters = <String, String>{};
 
     if (genres != null) {
       queryParameters['with_genres'] = genres.join(',');
@@ -73,7 +73,7 @@ class TMDBApi {
   /// Returns TV shows results based on a list of genres.
   Future<Map<String, dynamic>> getDiscoverTVShowsResults(
       {List<int> genres, int page}) async {
-    final Map<String, String> queryParameters = {};
+    final Map<String, String> queryParameters = <String, String>{};
 
     if (genres != null) {
       queryParameters['with_genres'] = genres.join(',');

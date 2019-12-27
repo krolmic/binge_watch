@@ -1,5 +1,5 @@
 class TMDBApiResponseException implements Exception {
-  final String message;
+  const TMDBApiResponseException([this.message = '']);
 
-  const TMDBApiResponseException([this.message = ""]);
+  final String message;
 }
