@@ -5,7 +5,7 @@ import 'package:binge_watch/models/movie.dart';
 void main() {
   group('Model Movie tests', () {
     test('Movie.fromJson valid data test', () {
-      Map<String, dynamic> data = <String, dynamic>{
+      final Map<String, dynamic> data = <String, dynamic>{
         'popularity': 409.554,
         'vote_count': 485,
         'video': false,
