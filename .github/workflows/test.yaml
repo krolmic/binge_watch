@@ -13,12 +13,11 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '1.9.1+hotfix.6'
-      - uses: comigor/actions/dart-test
       - run: flutter pub get
       - run: flutter build aot
       - run: flutter analyze
       - run: flutter test --coverage
-      - run: dart tmdb_api/test/*
+      - run: dart tmdb_api/test/
       - uses: codecov/codecov-action@v1.0.2
         with:
           token: ${{secrets.CODECOV_TOKEN}}
