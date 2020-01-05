@@ -9,6 +9,9 @@ abstract class MovieTVShowBase {
     this.genreIds,
     this.voteAverage,
     this.overview,
+    this.homepage,
+    this.productionCompanies,
+    this.status,
   });
 
   final double popularity;
@@ -20,4 +23,7 @@ abstract class MovieTVShowBase {
   final List<int> genreIds;
   final double voteAverage;
   final String overview;
+  final String homepage;
+  final List<Map<String, dynamic>> productionCompanies;
+  final String status;
 }
